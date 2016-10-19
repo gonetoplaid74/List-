@@ -6,6 +6,10 @@ target 'List!' do
   use_frameworks!
 
   # Pods for List!
-  pod 'Firebase/Core'
+ pod 'Firebase/Database'
+ pod 'Firebase/Auth'
+ pod 'Firebase/Storage'
+ pod 'Firebase/Core'
+ pod 'SwiftKeychainWrapper'
 
 end
