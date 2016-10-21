@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1640B0801DB92CDA009A5977 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640B07F1DB92CDA009A5977 /* TextField.swift */; };
+		1640B0821DB92D82009A5977 /* MaterialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640B0811DB92D82009A5977 /* MaterialButton.swift */; };
+		1640B0851DB93085009A5977 /* MaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640B0841DB93085009A5977 /* MaterialView.swift */; };
+		1640B0871DB933A1009A5977 /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1640B0861DB933A1009A5977 /* BottomView.swift */; };
 		1651671F1DB7EC0C00EF1574 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1651671E1DB7EC0C00EF1574 /* GoogleService-Info.plist */; };
 		167068991DB7E8B700F6AB06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167068981DB7E8B700F6AB06 /* AppDelegate.swift */; };
 		1670689B1DB7E8B700F6AB06 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1670689A1DB7E8B700F6AB06 /* LoginVC.swift */; };
@@ -20,9 +24,16 @@
 		167068B41DB7EA2000F6AB06 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167068B31DB7EA2000F6AB06 /* Constants.swift */; };
 		167068B61DB7EA3700F6AB06 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167068B51DB7EA3700F6AB06 /* DataService.swift */; };
 		B8715E608893CCC80197752A /* Pods_List_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2CFA804C923A2A04EAF50 /* Pods_List_.framework */; };
+		C2A31A921DBA211700DB99B0 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A31A911DBA211700DB99B0 /* PostCell.swift */; };
+		C2FF90151DB91D150058E56C /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF90141DB91D150058E56C /* post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1640B07F1DB92CDA009A5977 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		1640B0811DB92D82009A5977 /* MaterialButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialButton.swift; sourceTree = "<group>"; };
+		1640B0831DB92F90009A5977 /* clean up your mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "clean up your mess.ttf"; sourceTree = "<group>"; };
+		1640B0841DB93085009A5977 /* MaterialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialView.swift; sourceTree = "<group>"; };
+		1640B0861DB933A1009A5977 /* BottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
 		1651671E1DB7EC0C00EF1574 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		167068951DB7E8B700F6AB06 /* List!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "List!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		167068981DB7E8B700F6AB06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +50,9 @@
 		167068B51DB7EA3700F6AB06 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		4DE940451C8E4B4281D048CC /* Pods-List!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-List!.release.xcconfig"; path = "Pods/Target Support Files/Pods-List!/Pods-List!.release.xcconfig"; sourceTree = "<group>"; };
 		750C618953B336A0F455BDD6 /* Pods-List!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-List!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-List!/Pods-List!.debug.xcconfig"; sourceTree = "<group>"; };
+		C2A31A901DBA0AD500DB99B0 /* List!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "List!.entitlements"; sourceTree = "<group>"; };
+		C2A31A911DBA211700DB99B0 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		C2FF90141DB91D150058E56C /* post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
 		FDB2CFA804C923A2A04EAF50 /* Pods_List_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_List_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -75,6 +89,8 @@
 		167068971DB7E8B700F6AB06 /* List! */ = {
 			isa = PBXGroup;
 			children = (
+				C2A31A901DBA0AD500DB99B0 /* List!.entitlements */,
+				1640B0831DB92F90009A5977 /* clean up your mess.ttf */,
 				167068B71DB7EA5300F6AB06 /* Views */,
 				167068981DB7E8B700F6AB06 /* AppDelegate.swift */,
 				1670689C1DB7E8B700F6AB06 /* Main.storyboard */,
@@ -84,7 +100,12 @@
 				1670689F1DB7E8B700F6AB06 /* List_.xcdatamodeld */,
 				167068B31DB7EA2000F6AB06 /* Constants.swift */,
 				167068B51DB7EA3700F6AB06 /* DataService.swift */,
+				C2FF90141DB91D150058E56C /* post.swift */,
 				1651671E1DB7EC0C00EF1574 /* GoogleService-Info.plist */,
+				1640B07F1DB92CDA009A5977 /* TextField.swift */,
+				1640B0811DB92D82009A5977 /* MaterialButton.swift */,
+				1640B0841DB93085009A5977 /* MaterialView.swift */,
+				1640B0861DB933A1009A5977 /* BottomView.swift */,
 			);
 			path = "List!";
 			sourceTree = "<group>";
@@ -96,6 +117,7 @@
 				167068B11DB7EA0E00F6AB06 /* PrivateListVC.swift */,
 				167068AD1DB7E9AD00F6AB06 /* MainScreenVC.swift */,
 				1670689A1DB7E8B700F6AB06 /* LoginVC.swift */,
+				C2A31A911DBA211700DB99B0 /* PostCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -154,6 +176,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = MNM3C2L7P4;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -245,9 +272,15 @@
 				167068B21DB7EA0E00F6AB06 /* PrivateListVC.swift in Sources */,
 				1670689B1DB7E8B700F6AB06 /* LoginVC.swift in Sources */,
 				167068991DB7E8B700F6AB06 /* AppDelegate.swift in Sources */,
+				1640B0851DB93085009A5977 /* MaterialView.swift in Sources */,
+				1640B0801DB92CDA009A5977 /* TextField.swift in Sources */,
+				1640B0871DB933A1009A5977 /* BottomView.swift in Sources */,
 				167068A11DB7E8B700F6AB06 /* List_.xcdatamodeld in Sources */,
+				1640B0821DB92D82009A5977 /* MaterialButton.swift in Sources */,
+				C2A31A921DBA211700DB99B0 /* PostCell.swift in Sources */,
 				167068B41DB7EA2000F6AB06 /* Constants.swift in Sources */,
 				167068AE1DB7E9AD00F6AB06 /* MainScreenVC.swift in Sources */,
+				C2FF90151DB91D150058E56C /* post.swift in Sources */,
 				167068B01DB7E9F700F6AB06 /* GroupListVC.swift in Sources */,
 				167068B61DB7EA3700F6AB06 /* DataService.swift in Sources */,
 			);
@@ -373,9 +406,10 @@
 			baseConfigurationReference = 750C618953B336A0F455BDD6 /* Pods-List!.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "List!/List!.entitlements";
 				DEVELOPMENT_TEAM = MNM3C2L7P4;
 				INFOPLIST_FILE = "List!/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.uk.gonetoplaid.List-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -388,9 +422,10 @@
 			baseConfigurationReference = 4DE940451C8E4B4281D048CC /* Pods-List!.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "List!/List!.entitlements";
 				DEVELOPMENT_TEAM = MNM3C2L7P4;
 				INFOPLIST_FILE = "List!/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.uk.gonetoplaid.List-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
