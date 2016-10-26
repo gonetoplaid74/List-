@@ -18,6 +18,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     // @IBOutlet weak var addCatagoryLBL: UITextField!
     @IBOutlet weak var listTitle: UILabel!
     @IBOutlet weak var addItemLbl: UITextField!
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var listName = String()
     
@@ -36,7 +37,9 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableView.delegate = self
         tableView.dataSource = self
         
-        
+        if listName == "Grocery" {
+            searchBtn.isHidden = false
+        }
         
         
         DataService.ds.REF_POSTS.queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: { snapshot in
@@ -73,22 +76,33 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let item = self.posts[indexPath.row]
         self.posts.remove(at: indexPath.row)
         
-        DataService.ds.REF_POSTS.child(item.postID).removeValue(completionBlock: { (error, ref) in
+        if listName == "Grocery" {
+        
+        DataService.ds.REF_POSTS.child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
             if error != nil {
                 print("Failed to delete item;" , error)
                 return
             }
+            })
             
+        } else {
+            
+            DataService.ds.REF_POSTS.child(item.postID).removeValue(completionBlock: { (error, ref) in
+                    if error != nil {
+                        print("Failed to delete item", error)
+                        return
+                    }
+            })
+            }
             
             
             
             //  self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.reloadData()
             
-            
-        })
-        
-        self.tableView.reloadData()
-    }
+        }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count

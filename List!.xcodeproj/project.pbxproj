@@ -24,6 +24,8 @@
 		167068B41DB7EA2000F6AB06 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167068B31DB7EA2000F6AB06 /* Constants.swift */; };
 		167068B61DB7EA3700F6AB06 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167068B51DB7EA3700F6AB06 /* DataService.swift */; };
 		B8715E608893CCC80197752A /* Pods_List_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2CFA804C923A2A04EAF50 /* Pods_List_.framework */; };
+		C221BFC01DC0E3D3006B4AF8 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C221BFBF1DC0E3D3006B4AF8 /* SearchCell.swift */; };
+		C221BFC21DC0E5CB006B4AF8 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C221BFC11DC0E5CB006B4AF8 /* SearchVC.swift */; };
 		C2A31A921DBA211700DB99B0 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A31A911DBA211700DB99B0 /* PostCell.swift */; };
 		C2FF90151DB91D150058E56C /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF90141DB91D150058E56C /* post.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,8 @@
 		167068B51DB7EA3700F6AB06 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		4DE940451C8E4B4281D048CC /* Pods-List!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-List!.release.xcconfig"; path = "Pods/Target Support Files/Pods-List!/Pods-List!.release.xcconfig"; sourceTree = "<group>"; };
 		750C618953B336A0F455BDD6 /* Pods-List!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-List!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-List!/Pods-List!.debug.xcconfig"; sourceTree = "<group>"; };
+		C221BFBF1DC0E3D3006B4AF8 /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		C221BFC11DC0E5CB006B4AF8 /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		C2A31A901DBA0AD500DB99B0 /* List!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "List!.entitlements"; sourceTree = "<group>"; };
 		C2A31A911DBA211700DB99B0 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		C2FF90141DB91D150058E56C /* post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
@@ -114,10 +118,12 @@
 			isa = PBXGroup;
 			children = (
 				167068AF1DB7E9F700F6AB06 /* GroupListVC.swift */,
+				C221BFC11DC0E5CB006B4AF8 /* SearchVC.swift */,
 				167068B11DB7EA0E00F6AB06 /* PrivateListVC.swift */,
 				167068AD1DB7E9AD00F6AB06 /* MainScreenVC.swift */,
 				1670689A1DB7E8B700F6AB06 /* LoginVC.swift */,
 				C2A31A911DBA211700DB99B0 /* PostCell.swift */,
+				C221BFBF1DC0E3D3006B4AF8 /* SearchCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -270,12 +276,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				167068B21DB7EA0E00F6AB06 /* PrivateListVC.swift in Sources */,
+				C221BFC01DC0E3D3006B4AF8 /* SearchCell.swift in Sources */,
 				1670689B1DB7E8B700F6AB06 /* LoginVC.swift in Sources */,
 				167068991DB7E8B700F6AB06 /* AppDelegate.swift in Sources */,
 				1640B0851DB93085009A5977 /* MaterialView.swift in Sources */,
 				1640B0801DB92CDA009A5977 /* TextField.swift in Sources */,
 				1640B0871DB933A1009A5977 /* BottomView.swift in Sources */,
 				167068A11DB7E8B700F6AB06 /* List_.xcdatamodeld in Sources */,
+				C221BFC21DC0E5CB006B4AF8 /* SearchVC.swift in Sources */,
 				1640B0821DB92D82009A5977 /* MaterialButton.swift in Sources */,
 				C2A31A921DBA211700DB99B0 /* PostCell.swift in Sources */,
 				167068B41DB7EA2000F6AB06 /* Constants.swift in Sources */,
