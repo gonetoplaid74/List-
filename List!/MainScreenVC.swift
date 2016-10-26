@@ -6,10 +6,13 @@
 //  Copyright © 2016 Allan Wallace. All rights reserved.
 //
 
+
 import UIKit
+import SwiftKeychainWrapper
+import Firebase
 
 class MainScreenVC: UIViewController {
-
+    
     @IBOutlet weak var grocery: MaterialButton!
     @IBOutlet weak var household: MaterialButton!
     @IBOutlet weak var chores: MaterialButton!
@@ -20,7 +23,7 @@ class MainScreenVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     @IBAction func householdBtnPressd(_ sender: AnyObject) {
@@ -56,8 +59,8 @@ class MainScreenVC: UIViewController {
     }
     
     @IBAction func privateOtherBtnPressed(_ sender: AnyObject) {
-                    list = "Private Other"
-            
+        list = "Private Other"
+        
         
         storeListAndSegue()
     }
@@ -79,10 +82,21 @@ class MainScreenVC: UIViewController {
         if list == "Private Other" || list == "Gifts" {
             performSegue(withIdentifier: "private", sender: self)
         } else {
-        
-        performSegue(withIdentifier: "group", sender: self)
+            
+            performSegue(withIdentifier: "group", sender: self)
         }
         print( "listname stored is userdefaults is ........... \(storedList.string(forKey: "List"))")
     }
-
+    
+    @IBAction func logoutBtnPressed(_ sender: AnyObject) {
+        
+        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
+        
+        print("ID removed from keychain \(keychainResult)")
+        
+        
+        try! FIRAuth.auth()?.signOut()
+        
+    }
 }
+
