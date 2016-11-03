@@ -39,10 +39,14 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         if listName == "Grocery" {
             searchBtn.isHidden = false
+            
         }
         
+        //FIRDatabase.database().persistenceEnabled = true
         
-        DataService.ds.REF_POSTS.queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: { snapshot in
+        FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: {snapshot in
+        
+       // DataService.ds.REF_POSTS.queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: { snapshot in
             
             
             
@@ -78,7 +82,9 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         if listName == "Grocery" {
         
-        DataService.ds.REF_POSTS.child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
+            
+            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
+      //  DataService.ds.REF_POSTS.child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
             if error != nil {
                 print("Failed to delete item;" , error)
                 return
@@ -87,7 +93,8 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
         } else {
             
-            DataService.ds.REF_POSTS.child(item.postID).removeValue(completionBlock: { (error, ref) in
+            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue(completionBlock: { (error, ref) in
+           // DataService.ds.REF_POSTS.child(item.postID).removeValue(completionBlock: { (error, ref) in
                     if error != nil {
                         print("Failed to delete item", error)
                         return
@@ -142,7 +149,8 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             // "Aisle": addCatagoryLBL.text!
         ]
         
-        let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
+        let firebasePost = FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").childByAutoId()
+      //  let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
         firebasePost.setValue(post)
         
         addItemLbl.text = ""

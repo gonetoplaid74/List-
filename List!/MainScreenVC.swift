@@ -23,6 +23,7 @@ class MainScreenVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      //  FIRDatabase.database().persistenceEnabled = true
         
         // Do any additional setup after loading the view.
     }
@@ -89,6 +90,9 @@ class MainScreenVC: UIViewController {
     }
     
     @IBAction func logoutBtnPressed(_ sender: AnyObject) {
+        
+        let groupName = UserDefaults.standard
+        groupName.set("", forKey: "GroupName")
         
         let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         

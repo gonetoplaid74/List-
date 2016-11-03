@@ -9,15 +9,21 @@
 import UIKit
 import Firebase
 
-class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate {
+
+class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var searchTitleLbl: UILabel!
     @IBOutlet weak var searchTableView: UITableView!
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchBar: UISearchBar!
+
     
             var listName = String()
             var posts = [Post]()
-        
+    let searchController = UISearchController(searchResultsController: nil)
+    var filteredPosts = [Post]()
+    
+    
+    
         
         override func viewDidLoad() {
             
@@ -27,15 +33,20 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 listName = title.string(forKey: "List")!
             }
             
+            
+            
             super.viewDidLoad()
             searchTableView.delegate = self
             searchTableView.dataSource = self
+            searchController.searchResultsUpdater = self
+            searchController.searchBar.delegate = self
+            searchController.dimsBackgroundDuringPresentation = false
+            definesPresentationContext = true
+            searchTableView.tableHeaderView = searchController.searchBar
             
             
             
-            
-            DataService.ds.REF_POSTS.queryOrdered(byChild: "Catagory").queryEqual(toValue: nil).observe(.value, with: { snapshot in
-                
+            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").queryOrdered(byChild: "Catagory").queryEqual(toValue: nil).observe(.value, with: { snapshot in
                 
                 
     
@@ -63,40 +74,65 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             return true
         }
         
-    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-            
-            // (completionBlock: { (error, ref) in
-        //        if error != nil {
-         //           print("Failed to delete item;" , error)
-         //           return
-         //       }
-                
-                
-                
-                
-                //  self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                
-                
-        //    })
-            
-    
-    //    }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let add = UITableViewRowAction(style: .normal, title: "Add") { action, index in
+            
+            if self.searchController.isActive && self.searchController.searchBar.text != "" {
+                let item = self.filteredPosts[indexPath.row]
+                self.filteredPosts.remove(at: indexPath.row)
+                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").setValue(self.listName)
+
+                
+            } else {
             let item = self.posts[indexPath.row]
             self.posts.remove(at: indexPath.row)
             
-            DataService.ds.REF_POSTS.child(item.postID).child("Catagory").setValue(self.listName)
+            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").setValue(self.listName)
             
-            print("Add button tapped")
-        }
-        add.backgroundColor = UIColor.green
-        return[add]
-        self.searchTableView.reloadData()
-    }
         
+        }
+        }
+        
+       
+        let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
+           
+            if self.searchController.isActive && self.searchController.searchBar.text != "" {
+           
+                let item = self.filteredPosts[indexPath.row]
+                self.filteredPosts.remove(at: indexPath.row)
+                
+                
+                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue()
+                
+            } else {
+
+            
+                
+                let item = self.posts[indexPath.row]
+                self.posts.remove(at: indexPath.row)
+            
+            
+            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue()
+
+            
+            }
+            }
+        
+        
+        add.backgroundColor = UIColor.green
+        delete.backgroundColor = UIColor.red
+        return[delete, add]
+        
+    
+    }
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            if searchController.isActive && searchController.searchBar.text != "" {
+                return filteredPosts.count
+              
+                
+            }
+            
             return posts.count
         }
         func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,46 +141,46 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let post = posts[indexPath.row]
             
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as? SearchCell
+            
+            let post : Post
+            
+            if searchController.isActive && searchController.searchBar.text != "" {
+                post = filteredPosts[indexPath.row]
                 
-                cell.configureCell(post: post)
+                print(" filet active..............", filteredPosts.count)
                 
-                return cell
             } else {
-                return SearchCell()
+                post = posts[indexPath.row]
+                
             }
             
+            cell?.configureCell(post: post)
+            return cell!
+            
         }
-      //  @IBAction func addBtnPressed(_ sender: AnyObject) {
-            
-      //      guard let item = addItemLbl.text, item != "" else {
-      //          print(" Item must be entered .............")
-      //          return
-     //       }
-     //       postToFirebase()
-            
-     //   }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
         
-     //   func postToFirebase() {
-     //       let post: Dictionary<String, String> = [
-     //           "Item": addItemLbl.text!,
-     //           "Catagory": listTitle.text!,
-                // "Aisle": addCatagoryLBL.text!
-     //       ]
-            
-    //        let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
-    //        firebasePost.setValue(post)
-    //
-     //       addItemLbl.text = ""
-           // addCatagoryLBL.text = ""
-            
-    //        self.searchTableView.reloadData()
+        filteredPosts = posts.filter { Post in
+            return Post.item.lowercased().contains(searchText.lowercased())
             
             
-    //    }
+        }
+            searchTableView.reloadData()
+    
         
+}
+
+    
+
+}
+
+extension SearchVC: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
         
-        
+        filterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
 }

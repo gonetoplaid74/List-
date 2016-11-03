@@ -18,6 +18,7 @@ class Post{
     private var _listName: String!
     private var _postID: String!
     private var _postReference: FIRDatabaseReference!
+    var groupName = UserDefaults.standard
     
     
     var catagory: String {
@@ -74,7 +75,9 @@ class Post{
         }
         
         
-        _postReference = DataService.ds.REF_POSTS.child(_postID)
+        _postReference = FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child(_postID)
+        
+        print("the post reference is ..................", _postReference)
         
     }
     func adjustLikes(addLikes: Bool) {
