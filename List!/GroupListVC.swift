@@ -95,8 +95,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let notif = UNMutableNotificationContent()
         
         notif.badge = posts.count as NSNumber?
-        notif.title = "test"
-        notif.subtitle = "this is a test"
+        
         
         let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
         
