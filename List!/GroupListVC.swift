@@ -9,6 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 import Firebase
+import UserNotifications
 
 
 
@@ -27,6 +28,10 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     override func viewDidLoad() {
         
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        
+        
         let title = UserDefaults.standard
         if title.string(forKey: "List") != nil {
             listTitle.text = title.string(forKey: "List")
@@ -37,16 +42,14 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableView.delegate = self
         tableView.dataSource = self
         
+        
         if listName == "Grocery" {
             searchBtn.isHidden = false
             
         }
         
-        //FIRDatabase.database().persistenceEnabled = true
         
         FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: {snapshot in
-        
-       // DataService.ds.REF_POSTS.queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: { snapshot in
             
             
             
@@ -65,12 +68,50 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             }
             
             
-            
+      
             self.tableView.reloadData()        })
         
         tableView.allowsSelectionDuringEditing = true
+        
     }
     
+    func appMovedToBackground() {
+        if listName == "Grocery" {
+            self.scheduleNotification(inSeconds: 2, completion: { success in
+                
+                if success {
+                    print("notification scheduled")
+                } else {
+                    print("Not successful")
+                }
+            })
+            
+            
+        }
+
+    }
+    
+    func scheduleNotification(inSeconds: TimeInterval, completion: @escaping (_ Success: Bool) -> ()) {
+        let notif = UNMutableNotificationContent()
+        
+        notif.badge = posts.count as NSNumber?
+        notif.title = "test"
+        notif.subtitle = "this is a test"
+        
+        let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "badge", content: notif, trigger: notifTrigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+            if error != nil {
+                completion(false)
+            } else {
+                completion(true)
+            }
+            
+        })
+        
+    }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -84,27 +125,17 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
             
             FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
-      //  DataService.ds.REF_POSTS.child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
-            if error != nil {
-                print("Failed to delete item;" , error)
-                return
-            }
+            
             })
             
         } else {
             
             FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue(completionBlock: { (error, ref) in
-           // DataService.ds.REF_POSTS.child(item.postID).removeValue(completionBlock: { (error, ref) in
-                    if error != nil {
-                        print("Failed to delete item", error)
                         return
-                    }
+                
             })
             }
-            
-            
-            
-            //  self.tableView.deleteRows(at: [indexPath], with: .automatic)
+      
             self.tableView.reloadData()
             
         }
@@ -112,8 +143,10 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return posts.count
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
         
@@ -134,8 +167,9 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     @IBAction func addBtnPressed(_ sender: AnyObject) {
         
+
+        
         guard let item = addItemLbl.text, item != "" else {
-            print(" Item must be entered .............")
             return
         }
         postToFirebase()
@@ -150,7 +184,6 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         ]
         
         let firebasePost = FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").childByAutoId()
-      //  let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
         firebasePost.setValue(post)
         
         addItemLbl.text = ""

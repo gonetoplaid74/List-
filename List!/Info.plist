@@ -43,5 +43,7 @@
 	<array>
 		<string>clean up your mess.ttf</string>
 	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 </dict>
 </plist>
