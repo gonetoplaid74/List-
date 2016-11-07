@@ -11,7 +11,7 @@ import Firebase
 
 
 class SearchCell: UITableViewCell {
-    @IBOutlet weak var searchItem: UITextView!
+    @IBOutlet weak var searchItem: UILabel!
     var post: Post!
     var list = String()
     

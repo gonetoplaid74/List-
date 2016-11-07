@@ -23,9 +23,7 @@ class MainScreenVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  FIRDatabase.database().persistenceEnabled = true
-        
-        // Do any additional setup after loading the view.
+      
     }
     @IBAction func householdBtnPressd(_ sender: AnyObject) {
         if let listName = household.titleLabel?.text {
@@ -60,7 +58,7 @@ class MainScreenVC: UIViewController {
     }
     
     @IBAction func privateOtherBtnPressed(_ sender: AnyObject) {
-        list = "Private Other"
+        list = "Private"
         
         
         storeListAndSegue()
@@ -80,7 +78,7 @@ class MainScreenVC: UIViewController {
         let storedList = UserDefaults.standard
         storedList.set(list, forKey: "List")
         
-        if list == "Private Other" || list == "Gifts" {
+        if list == "Private" || list == "Gifts" {
             performSegue(withIdentifier: "private", sender: self)
         } else {
             

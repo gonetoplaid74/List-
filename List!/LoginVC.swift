@@ -19,9 +19,9 @@ class LoginVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        FIRDatabase.database().persistenceEnabled = true
-
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+       
            }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,8 +46,7 @@ class LoginVC: UIViewController {
         }
         }
         
-     //   DataService.ds.REF_BASE.updateChildValues(["Group": groupName.string(forKey: "GroupName") as NSString!])
-        
+    
         
         
         
@@ -79,6 +78,8 @@ class LoginVC: UIViewController {
                 }
             })
         }
+        passwordField.resignFirstResponder()
+        groupField.resignFirstResponder()
     }
     
     
@@ -86,13 +87,26 @@ class LoginVC: UIViewController {
         
         DataService.ds.createFirbaseDBUser(uid: id, userData: userData)
                 
-        let keychainResult = KeychainWrapper.standard.set(id, forKey: KEY_UID)
-        print("this fing thing aint working ..........................\(id)")
-        print("data saved to keychain \(keychainResult)")
-        
+        _ = KeychainWrapper.standard.set(id, forKey: KEY_UID)
+            
         performSegue(withIdentifier: "login", sender: nil)
             
     }
+    func keyboardWillShow(notification: NSNotification) {
+        
+        
+        if self.view.frame.origin.y == 0{
+            self.view.frame.origin.y -= 100
+        }
+        
+    }
     
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0{
+            self.view.frame.origin.y += 100
+        }
+    }
+
     
 }

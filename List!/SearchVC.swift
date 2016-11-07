@@ -31,6 +31,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             if title.string(forKey: "List") != nil {
                 searchTitleLbl.text = title.string(forKey: "List")
                 listName = title.string(forKey: "List")!
+                
+            
             }
             
             
@@ -120,8 +122,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             }
         
         
-        add.backgroundColor = UIColor.green
-        delete.backgroundColor = UIColor.red
+        add.backgroundColor = UIColor(red: 0.3764, green: 0.4902, blue: 0.5451, alpha: 1.0)
+        delete.backgroundColor = UIColor(red: 0.9411, green: 0.3764, blue: 0.5725, alpha: 1.0)
         return[delete, add]
         
     
@@ -149,7 +151,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             if searchController.isActive && searchController.searchBar.text != "" {
                 post = filteredPosts[indexPath.row]
                 
-                print(" filet active..............", filteredPosts.count)
+               
                 
             } else {
                 post = posts[indexPath.row]
@@ -178,7 +180,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
 }
 
 extension SearchVC: UISearchResultsUpdating {
-    // MARK: - UISearchResultsUpdating Delegate
+    
     func updateSearchResults(for searchController: UISearchController) {
         
         filterContentForSearchText(searchText: searchController.searchBar.text!)

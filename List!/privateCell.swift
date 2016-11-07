@@ -12,7 +12,7 @@ import Firebase
 class privateCell: UITableViewCell {
 
     
-    @IBOutlet weak var privateItem: UITextView!
+    @IBOutlet weak var privateItem: UILabel!
     var post: Post!
     var likesRef: FIRDatabaseReference!
     var list = String()

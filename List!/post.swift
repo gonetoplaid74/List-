@@ -77,17 +77,7 @@ class Post{
         
         _postReference = FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child(_postID)
         
-        print("the post reference is ..................", _postReference)
-        
-    }
-    func adjustLikes(addLikes: Bool) {
-        if addLikes {
-            _likes = _likes + 1
-        } else {
-            _likes = _likes - 1
-        }
-        _postReference.child("Likes").setValue(likes)
-        
+               
     }
     
     

@@ -10,6 +10,11 @@ import UIKit
 import SwiftKeychainWrapper
 import Firebase
 
+var privateitemTextLbl = String()
+var privateitemPostID = String()
+
+
+
 class PrivateListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
 
     @IBOutlet weak var privateTableView: UITableView!
@@ -76,25 +81,71 @@ class PrivateListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+            
+            let item = self.posts[indexPath.row]
+            
+            privateitemTextLbl = item.item
+            privateitemPostID = item.postID
+            
+            self.performSegue(withIdentifier: "PrivateEdit", sender: UITableViewRowAction())
+            
+            
+            
+            
+        }
         
-        let item = self.posts[indexPath.row]
-        self.posts.remove(at: indexPath.row)
         
-        
-            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Users").child(user).child(item.postID).removeValue(completionBlock: { (error, ref) in
-                // DataService.ds.REF_POSTS.child(item.postID).removeValue(completionBlock: { (error, ref) in
-                if error != nil {
-                    print("Failed to delete item", error)
+        let delete = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
+            
+            
+            let item = self.posts[indexPath.row]
+            self.posts.remove(at: indexPath.row)
+            
+            
+                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Users").child(self.user).child(item.postID).removeValue(completionBlock: { (error, ref) in
                     return
-                }
-            })
+                    
+                })
+            self.privateTableView.reloadData()
+            }
         
-         self.privateTableView.deleteRows(at: [indexPath], with: .automatic)
-         self.privateTableView.reloadData()
         
-
+        
+        
+        edit.backgroundColor = UIColor(red: 0.3764, green: 0.4902, blue: 0.5451, alpha: 1.0)
+        delete.backgroundColor = UIColor(red: 1.0, green: 0.502, blue: 0.051, alpha: 1.0 )
+        return[delete, edit]
+        
+        
     }
+    
+
+    
+    
+    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        
+//        let item = self.posts[indexPath.row]
+//        self.posts.remove(at: indexPath.row)
+//        
+//        
+//            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Users").child(user).child(item.postID).removeValue(completionBlock: { (error, ref) in
+//                
+//                if error != nil {
+//                   
+//                    return
+//                }
+//            })
+//        
+//         self.privateTableView.deleteRows(at: [indexPath], with: .automatic)
+//         self.privateTableView.reloadData()
+//        
+//
+//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,21 +163,22 @@ class PrivateListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             
             cell.configureCell(post: post)
             
+            
             return cell
         } else {
             return privateCell()
         }
-        
+                
     }
     
     @IBAction func privateAddBtnPressed(_ sender: Any) {
     
         
         guard let item = privateAddItem.text, item != "" else {
-            print(" Item must be entered .............")
-            return
+                        return
         }
         postToFirebase()
+        privateAddItem.resignFirstResponder()
         
     }
     

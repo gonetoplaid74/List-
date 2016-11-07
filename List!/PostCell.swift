@@ -12,7 +12,7 @@ import Firebase
 
 class PostCell: UITableViewCell {
     
-    @IBOutlet weak var item: UITextView!
+    @IBOutlet weak var item: UILabel!
    
     
     var post: Post!

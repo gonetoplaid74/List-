@@ -11,12 +11,14 @@ import SwiftKeychainWrapper
 import Firebase
 import UserNotifications
 
-
+var itemTextLbl = String()
+var itemPostID = String()
+var itemAisle = String()
 
 
 
 class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
-    // @IBOutlet weak var addCatagoryLBL: UITextField!
+    @IBOutlet weak var addCatagoryLBL: UITextField!
     @IBOutlet weak var listTitle: UILabel!
     @IBOutlet weak var addItemLbl: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
@@ -79,11 +81,6 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         if listName == "Grocery" {
             self.scheduleNotification(inSeconds: 2, completion: { success in
                 
-                if success {
-                    print("notification scheduled")
-                } else {
-                    print("Not successful")
-                }
             })
             
             
@@ -115,30 +112,55 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+            
+                let item = self.posts[indexPath.row]
+            
+                itemTextLbl = item.item
+                itemPostID = item.postID
+                itemAisle = item.aisle
+            self.performSegue(withIdentifier: "Edit", sender: UITableViewRowAction())
         
-        let item = self.posts[indexPath.row]
-        self.posts.remove(at: indexPath.row)
-        
-        if listName == "Grocery" {
-        
             
-            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
             
-            })
-            
-        } else {
-            
-            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue(completionBlock: { (error, ref) in
-                        return
-                
-            })
-            }
-      
-            self.tableView.reloadData()
             
         }
-    
+        
+        
+        let delete = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
+            
+            
+            let item = self.posts[indexPath.row]
+            self.posts.remove(at: indexPath.row)
+            
+            if self.listName == "Grocery" {
+                
+                
+                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
+                    
+                
+                
+            })
+            } else {
+                
+                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue(completionBlock: { (error, ref) in
+                    return
+                    
+                })
+            }
+            
+            self.tableView.reloadData()        }
+        
+        
+        edit.backgroundColor = UIColor(red: 0.3764, green: 0.4902, blue: 0.5451, alpha: 1.0)
+        delete.backgroundColor = UIColor(red: 0.9411, green: 0.3764, blue: 0.5725, alpha: 1.0)
+        return[delete, edit]
+        
+        
+    }
+
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -159,6 +181,8 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             cell.configureCell(post: post)
             
             return cell
+            
+            
         } else {
             return PostCell()
         }
@@ -172,6 +196,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             return
         }
         postToFirebase()
+        addItemLbl.resignFirstResponder()
         
     }
     
@@ -179,14 +204,14 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let post: Dictionary<String, String> = [
             "Item": addItemLbl.text!,
             "Catagory": listTitle.text!,
-            // "Aisle": addCatagoryLBL.text!
+            "Aisle": addCatagoryLBL.text!
         ]
         
         let firebasePost = FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").childByAutoId()
         firebasePost.setValue(post)
         
         addItemLbl.text = ""
-        // addCatagoryLBL.text = ""
+        addCatagoryLBL.text = ""
         
         self.tableView.reloadData()
         
