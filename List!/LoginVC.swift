@@ -15,12 +15,22 @@ class LoginVC: UIViewController {
     @IBOutlet weak var usernameField: TextField!
     @IBOutlet weak var passwordField: TextField!
     @IBOutlet weak var groupField: TextField!
+    @IBOutlet weak var loginInfo: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loginInfo.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        let groupName = UserDefaults.standard
+        if groupName.string(forKey: "GroupName") != "" {
+            groupField.text = groupName.string(forKey: "GroupName")
+        } else {
+            groupField.text = ""
+        }
        
            }
     
@@ -62,9 +72,13 @@ class LoginVC: UIViewController {
                         userID.set(user.uid, forKey: "User")
                     }
                 } else {
-                    FIRAuth.auth()?.createUser(withEmail: email, password: pwd, completion: { (user, error) in
+                    
+                    self.loginInfo.text = error?.localizedDescription
+                    self.loginInfo.isHidden = false
+                                        FIRAuth.auth()?.createUser(withEmail: email, password: pwd, completion: { (user, error) in
                         if error != nil {
-                        
+                       self.loginInfo.text = error?.localizedDescription
+                            self.loginInfo.isHidden = false
                         } else {
                             
                             if let user = user {

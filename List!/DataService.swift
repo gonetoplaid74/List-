@@ -54,7 +54,7 @@ class DataService {
     }
     
     func getPosts(catagory: String, item: String, likes: Int, listName: String){
-        REF_POSTS
+      //  REF_POSTS
     }
     
 }

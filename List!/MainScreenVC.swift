@@ -89,8 +89,8 @@ class MainScreenVC: UIViewController {
     
     @IBAction func logoutBtnPressed(_ sender: AnyObject) {
         
-        let groupName = UserDefaults.standard
-        groupName.set("", forKey: "GroupName")
+       // let groupName = UserDefaults.standard
+      //  groupName.set("", forKey: "GroupName")
         
         let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         
