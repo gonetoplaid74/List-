@@ -59,7 +59,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
                 self.posts = []
                 for snap in snapshot {
-                    print("SNAP: \(snap)")
+                   
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
                         let post = Post(postID: key, postData: postDict)
@@ -118,12 +118,20 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
                 let item = self.posts[indexPath.row]
             
+            
+            if self.listName == "Grocery" {
                 itemTextLbl = item.item
                 itemPostID = item.postID
                 itemAisle = item.aisle
             self.performSegue(withIdentifier: "Edit", sender: UITableViewRowAction())
         
-            
+            } else {
+                itemTextLbl = item.item
+                itemPostID = item.postID
+                self.performSegue(withIdentifier: "edit2", sender: UITableViewRowAction())
+
+                
+            }
             
             
         }
@@ -193,6 +201,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
 
         
         guard let item = addItemLbl.text, item != "" else {
+            
             return
         }
         postToFirebase()
@@ -201,17 +210,33 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     
     func postToFirebase() {
-        let post: Dictionary<String, String> = [
+        
+        let post: Dictionary<String, String>
+        
+        if listName == "Grocery" {
+        post = [
             "Item": addItemLbl.text!,
             "Catagory": listTitle.text!,
             "Aisle": addCatagoryLBL.text!
         ]
         
+        
+        } else {
+            post = [
+                "Item": addItemLbl.text!,
+                "Catagory": listTitle.text!
+        ]
+            
+            
+        }
+        
         let firebasePost = FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").childByAutoId()
         firebasePost.setValue(post)
         
         addItemLbl.text = ""
+        if listName == "Grocery" {
         addCatagoryLBL.text = ""
+        }
         
         self.tableView.reloadData()
         

@@ -17,6 +17,7 @@ class Post{
     private var _likes: Int!
     private var _listName: String!
     private var _postID: String!
+    private var _groups = "test"
     private var _postReference: FIRDatabaseReference!
     var groupName = UserDefaults.standard
     
@@ -40,6 +41,21 @@ class Post{
     }
     var postID: String {
         return _postID
+    }
+    
+    var groups: String {
+        return _groups
+    }
+    
+    init(Group: Dictionary<String,AnyObject>){
+        
+        self._groups = groups
+        
+        if let groups = Group["Group"] as? String{
+            self._groups = groups
+        }
+        
+       
     }
     
     init(catagory: String, item: String, likes: Int, listName: String, aisle: String) {

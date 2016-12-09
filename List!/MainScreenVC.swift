@@ -80,11 +80,13 @@ class MainScreenVC: UIViewController {
         
         if list == "Private" || list == "Gifts" {
             performSegue(withIdentifier: "private", sender: self)
-        } else {
+        } else  if list == "Grocery"{
             
             performSegue(withIdentifier: "group", sender: self)
+        } else {
+            performSegue(withIdentifier: "other", sender: self)
         }
-        print( "listname stored is userdefaults is ........... \(storedList.string(forKey: "List"))")
+     
     }
     
     @IBAction func logoutBtnPressed(_ sender: AnyObject) {
@@ -94,7 +96,7 @@ class MainScreenVC: UIViewController {
         
         let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         
-        print("ID removed from keychain \(keychainResult)")
+      
         
         
         try! FIRAuth.auth()?.signOut()

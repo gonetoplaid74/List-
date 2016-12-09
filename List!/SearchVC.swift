@@ -55,7 +55,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
                     self.posts = []
                     for snap in snapshot {
-                        print("SNAP: \(snap)")
+                       
                         if let postDict = snap.value as? Dictionary<String, AnyObject> {
                             let key = snap.key
                             let post = Post(postID: key, postData: postDict)

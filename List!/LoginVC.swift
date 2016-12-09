@@ -16,6 +16,7 @@ class LoginVC: UIViewController {
     @IBOutlet weak var passwordField: TextField!
     @IBOutlet weak var groupField: TextField!
     @IBOutlet weak var loginInfo: UILabel!
+    var groups = [String]()
     
     
     override func viewDidLoad() {
@@ -31,6 +32,40 @@ class LoginVC: UIViewController {
         } else {
             groupField.text = ""
         }
+        
+        let username = UserDefaults.standard
+        if username.string(forKey: "UserName") != "" {
+            usernameField.text = username.string(forKey: "UserName")
+        } else {
+            usernameField.text = ""
+        }
+        
+        
+        FIRDatabase.database().reference().observe(.value, with: {snapshot in
+            
+            
+            
+            
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                self.groups = []
+                for snap in snapshot {
+                    
+                    let groupDict = snap.key
+                        
+                        
+                        self.groups.append(groupDict)
+                     
+                        
+                    
+                }
+            }
+            
+            
+            
+            })
+        
+        
+
        
            }
     
@@ -41,8 +76,70 @@ class LoginVC: UIViewController {
         
     }
     
+    @IBAction func signUpBtnPressed(_ sender: Any) {
+        guard let groupBox = groupField.text, groupBox != "" else {
+            loginInfo.isHidden = false
+            loginInfo.text = "Please enter a Group Name"
+            return
+        }
+        let groupName = UserDefaults.standard
+        
+        if let GID =  groupField.text {
+            if GID != "" {
+                groupName.set(GID, forKey: "GroupName")
+                
+                
+            } else {
+                groupName.set("Generic", forKey: "GroupName")
+            }
+        }
+        
+            let username = UserDefaults.standard
+            
+            if let userID = usernameField.text {
+                if userID != "" {
+                    username.set(userID, forKey: "UserName")
+                } else {
+                    username.set("", forKey: "UserName")
+                }
+            }
+            let status = UserDefaults.standard
+            if groups.contains(groupField.text!) {
+                
+            
+                status.set("Existing", forKey: "Status")
+                
+            } else {
+                
+                status.set("New", forKey: "Status")
+                
+            }
+
+        
+        let passwordStore = UserDefaults.standard
+        passwordStore.set(passwordField.text, forKey: "password")
+            
+            performSegue(withIdentifier: "passcode", sender: nil)
+        
+            
+        
+        
+
+        passwordField.resignFirstResponder()
+        groupField.resignFirstResponder()
+
+        
+    }
 
     @IBAction func loginBtnPressed(_ sender: AnyObject) {
+        
+        
+       
+        guard let groupBox = groupField.text, groupBox != "" else {
+            loginInfo.isHidden = false
+            loginInfo.text = "Please enter a Group Name"
+            return
+        }
         
         let groupName = UserDefaults.standard
         
@@ -54,6 +151,16 @@ class LoginVC: UIViewController {
         } else {
                 groupName.set("Generic", forKey: "GroupName")
         }
+            
+            let username = UserDefaults.standard
+            
+            if let userID = usernameField.text {
+                if userID != "" {
+                    username.set(userID, forKey: "UserName")
+                } else {
+                    username.set("", forKey: "UserName")
+                }
+            }
         }
         
     
@@ -61,6 +168,8 @@ class LoginVC: UIViewController {
         
         
         if let email = usernameField.text, let pwd = passwordField.text, let group = groupField.text{
+            
+          
             FIRAuth.auth()?.signIn(withEmail: email, password: pwd, completion: { (user, error) in
                 if error == nil {
                     
@@ -75,21 +184,8 @@ class LoginVC: UIViewController {
                     
                     self.loginInfo.text = error?.localizedDescription
                     self.loginInfo.isHidden = false
-                                        FIRAuth.auth()?.createUser(withEmail: email, password: pwd, completion: { (user, error) in
-                        if error != nil {
-                       self.loginInfo.text = error?.localizedDescription
-                            self.loginInfo.isHidden = false
-                        } else {
-                            
-                            if let user = user {
-                                let userData = ["UserName": user.email, "Group": group]
-                                self.completeSignin(id: user.uid, userData: userData as! Dictionary<String, String>)
-                                
-                                let userID = UserDefaults.standard
-                                userID.set(user.uid, forKey: "User")                            }
-                        }
-                    })
-                }
+                    
+                                    }
             })
         }
         passwordField.resignFirstResponder()
@@ -106,6 +202,8 @@ class LoginVC: UIViewController {
         performSegue(withIdentifier: "login", sender: nil)
             
     }
+    
+    
     func keyboardWillShow(notification: NSNotification) {
         
         
@@ -122,5 +220,29 @@ class LoginVC: UIViewController {
         }
     }
 
+    @IBAction func forgottenPasswordBtnPressed(_ sender: Any) {
+        
+        
+        
+        
+        guard let emailCheck = usernameField.text, emailCheck != "" else {
+            loginInfo.isHidden = false
+            loginInfo.text = "Please enter an e-mail address"
+            return
+
+            
+            
+        }
+        
+        FIRAuth.auth()?.sendPasswordReset(withEmail: usernameField.text!) { (error) in
+            
+            if let emailadd = self.usernameField.text {
+                
+            self.loginInfo.text = ("Password Reset email sent to \(emailadd)")
+            
+        }
+        }
+        
+    }
     
 }
