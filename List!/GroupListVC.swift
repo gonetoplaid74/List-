@@ -79,6 +79,9 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     func appMovedToBackground() {
         if listName == "Grocery" {
+            if posts.count == 0 {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            } else {
             self.scheduleNotification(inSeconds: 2, completion: { success in
                 
             })
@@ -87,10 +90,12 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
 
     }
+    }
     
     func scheduleNotification(inSeconds: TimeInterval, completion: @escaping (_ Success: Bool) -> ()) {
         let notif = UNMutableNotificationContent()
         
+        if posts.count != 0 {
         notif.badge = posts.count as NSNumber?
         
         
@@ -107,6 +112,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             
         })
         
+    }
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
