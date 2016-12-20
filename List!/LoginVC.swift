@@ -106,6 +106,7 @@ class LoginVC: UIViewController {
             let status = UserDefaults.standard
             if groups.contains(groupField.text!) {
                 
+                
             
                 status.set("Existing", forKey: "Status")
                 

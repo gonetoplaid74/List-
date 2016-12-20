@@ -24,17 +24,26 @@ class PrivateListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     var user = String()
     var listName = String()
+    var list = String()
     
     var posts = [Post]()
     
     
     override func viewDidLoad() {
         
+        let listNo = UserDefaults.standard
+        
+        if let listcheck = listNo.string(forKey: "List"){
+            list = listcheck
+        }
+        
+
+        
         let title = UserDefaults.standard
         let userID = UserDefaults.standard
-        if title.string(forKey: "List") != nil {
-            privateLabel.text = title.string(forKey: "List")
-            listName = title.string(forKey: "List")!
+        if title.string(forKey: "ListName\(list)") != nil {
+            privateLabel.text = title.string(forKey: "ListName\(list)")
+            //listName = title.string(forKey: "List")!
         }
         
         if userID.string(forKey: "User") != nil {
@@ -49,7 +58,7 @@ class PrivateListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         
         
-        FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Users").child(user).queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: {snapshot in
+        FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Users").child(user).queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(list)").observe(.value, with: {snapshot in
             
             // DataService.ds.REF_POSTS.queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: { snapshot in
             
@@ -185,7 +194,7 @@ class PrivateListVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func postToFirebase() {
         let post: Dictionary<String, String> = [
             "Item": privateAddItem.text!,
-            "Catagory": privateLabel.text!
+            "Catagory": list
             
         ]
         

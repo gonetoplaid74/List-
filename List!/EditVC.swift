@@ -16,6 +16,7 @@ class EditVC: UIViewController {
     
     @IBOutlet weak var editAisleField: TextField!
     @IBOutlet weak var editTextField: UITextField!
+    @IBOutlet weak var editAisleLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,16 +24,22 @@ class EditVC: UIViewController {
         listName = list.string(forKey: "List")!
 
         editTextField.text = itemTextLbl
-        if listName == "Grocery" {
-        editAisleField.text = itemAisle
-        }
         
+        let list1Name = UserDefaults.standard
+        
+        if listName == list1Name.string(forKey: "List1Name") {
+        editAisleField.text = itemAisle
+            editAisleLbl.isHidden = false
+            editAisleField.isHidden = false
+        }         
         
     }
     @IBAction func updateBtnPressed(_ sender: Any) {
         
-        if listName == "Grocery"{
-        FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(itemPostID).child("Item").setValue(editTextField.text)
+        let list1Name = UserDefaults.standard
+        
+        if listName == list1Name.string(forKey: "List1Name") {
+            FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(itemPostID).child("Item").setValue(editTextField.text)
         
         FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(itemPostID).child("Aisle").setValue(editAisleField.text)
 
@@ -45,4 +52,15 @@ class EditVC: UIViewController {
 
     }
 
+    @IBAction func cancelBtnPressed(_ sender: Any) {
+        
+        let list1Name = UserDefaults.standard
+        
+        if listName == list1Name.string(forKey: "List1Name") {
+            self.performSegue(withIdentifier: "FinishEdit", sender: UIButton())
+        } else {
+            self.performSegue(withIdentifier: "FinishEdit2", sender: UIButton())
+        }
+        
+    }
     }

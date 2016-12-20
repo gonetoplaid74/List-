@@ -24,6 +24,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var listName = String()
+    var list = String()
     
     var posts = [Post]()
     
@@ -33,11 +34,18 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
         
+        let listNo = UserDefaults.standard
+        
+        if let listcheck = listNo.string(forKey: "List"){
+            list = listcheck
+        }
+        
+        
         
         let title = UserDefaults.standard
-        if title.string(forKey: "List") != nil {
-            listTitle.text = title.string(forKey: "List")
-            listName = title.string(forKey: "List")!
+        if title.string(forKey: "ListName\(list)") != nil {
+            listTitle.text = title.string(forKey: "ListName\(list)")
+            listName = title.string(forKey: "ListName\(list)")!
         }
         
         super.viewDidLoad()
@@ -45,13 +53,13 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableView.dataSource = self
         
         
-        if listName == "Grocery" {
+        if list == "1"{
             searchBtn.isHidden = false
             
         }
         
         
-        FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(listName)").observe(.value, with: {snapshot in
+        FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(list)").observe(.value, with: {snapshot in
             
             
             
@@ -78,7 +86,10 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     
     func appMovedToBackground() {
-        if listName == "Grocery" {
+        
+        
+        
+        if list == "1" {
             if posts.count == 0 {
                 UIApplication.shared.applicationIconBadgeNumber = 0
             } else {
@@ -125,7 +136,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 let item = self.posts[indexPath.row]
             
             
-            if self.listName == "Grocery" {
+            if self.list == "1" {
                 itemTextLbl = item.item
                 itemPostID = item.postID
                 itemAisle = item.aisle
@@ -149,8 +160,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let item = self.posts[indexPath.row]
             self.posts.remove(at: indexPath.row)
             
-            if self.listName == "Grocery" {
-                
+          if self.list == "1" {
                 
                 FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
                     
@@ -219,10 +229,12 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         let post: Dictionary<String, String>
         
-        if listName == "Grocery" {
-        post = [
+       
+        
+        if list == "1"{
+            post = [
             "Item": addItemLbl.text!,
-            "Catagory": listTitle.text!,
+            "Catagory": list,
             "Aisle": addCatagoryLBL.text!
         ]
         
@@ -230,7 +242,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         } else {
             post = [
                 "Item": addItemLbl.text!,
-                "Catagory": listTitle.text!
+                "Catagory": list
         ]
             
             
@@ -240,7 +252,10 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         firebasePost.setValue(post)
         
         addItemLbl.text = ""
-        if listName == "Grocery" {
+        
+       
+        
+        if list == "1" {
         addCatagoryLBL.text = ""
         }
         

@@ -15,6 +15,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     @IBOutlet weak var searchTitleLbl: UILabel!
     @IBOutlet weak var searchTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    var list = String()
 
     
             var listName = String()
@@ -27,11 +28,20 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         
         override func viewDidLoad() {
             
-            let title = UserDefaults.standard
-            if title.string(forKey: "List") != nil {
-                searchTitleLbl.text = title.string(forKey: "List")
-                listName = title.string(forKey: "List")!
+    
+            
+            let listNo = UserDefaults.standard
+            
+            if let listcheck = listNo.string(forKey: "List"){
                 
+                list = listcheck
+            }
+            
+            print("List\(list)")
+            let title = UserDefaults.standard
+            if title.string(forKey: "ListName\(list)") != nil {
+                searchTitleLbl.text = title.string(forKey: "ListName\(list)")
+                                
             
             }
             

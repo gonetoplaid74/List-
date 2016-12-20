@@ -68,6 +68,9 @@ class groupSetupVC: UIViewController {
         
         passcode = groupPasscodeField.text!
         
+        let pscode = UserDefaults.standard
+        pscode.set(passcode, forKey: "Passcode")
+        
         let group = UserDefaults.standard
         let ref = group.string(forKey: "GroupName")
         
@@ -182,6 +185,9 @@ class groupSetupVC: UIViewController {
             })
             }
         }
+        
+        
+        
         }
     
 func completeSignup(id: String, userData: Dictionary<String, String>) {

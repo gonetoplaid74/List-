@@ -18,17 +18,23 @@ class PostCell: UITableViewCell {
     var post: Post!
     var likesRef: FIRDatabaseReference!
     var list = String()
+    var listName = String()
 
 
     func viewDidLoad() {
         viewDidLoad()
         
-        let listName = UserDefaults.standard
+        let listCheck = UserDefaults.standard
+        let list1Name = UserDefaults.standard
         
-        if listName.string(forKey: "List") != nil {
-            list = listName.string(forKey: "List")!
+        if let listNo = listCheck.string(forKey: "List") {
+            list = listNo
+        }
+        
+        if list1Name.string(forKey: "ListName\(list)") != nil {
+            listName = list1Name.string(forKey: "ListName\(list)")!
         } else {
-            list = "Grocery"
+            listName = list1Name.string(forKey: "ListName1")!
         }
     
 

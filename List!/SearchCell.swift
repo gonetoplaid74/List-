@@ -19,11 +19,12 @@ class SearchCell: UITableViewCell {
         viewDidLoad()
         
         let listName = UserDefaults.standard
+        //let list1Name = UserDefaults.standard
         
         if listName.string(forKey: "List") != nil {
             list = listName.string(forKey: "List")!
         } else {
-            list = "Grocery"
+            list = "1"
         }
         
         

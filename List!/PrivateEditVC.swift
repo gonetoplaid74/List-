@@ -32,8 +32,12 @@ class PrivateEditVC: UIViewController {
         
         
         FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Users").child(self.user).child(privateitemPostID).child("Item").setValue(privateEditTextField.text)
+        performSegue(withIdentifier: "Pupdate", sender: UIButton())
         
         
+    }
+    @IBAction func cancelBtnPressed(_ sender: Any) {
+        performSegue(withIdentifier: "Pupdate", sender: UIButton())
     }
     
 }
