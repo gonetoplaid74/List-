@@ -13,6 +13,7 @@ class EditVC: UIViewController {
 
     var editText = String()
     var listName = String()
+    var list = String()
     
     @IBOutlet weak var editAisleField: TextField!
     @IBOutlet weak var editTextField: UITextField!
@@ -20,14 +21,16 @@ class EditVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let list = UserDefaults.standard
-        listName = list.string(forKey: "List")!
+        let listNo = UserDefaults.standard
+        if let listcheck = listNo.string(forKey: "List"){
+            list = listcheck
+        }
 
         editTextField.text = itemTextLbl
         
-        let list1Name = UserDefaults.standard
+       // let list1Name = UserDefaults.standard
         
-        if listName == list1Name.string(forKey: "List1Name") {
+        if list == "1" {
         editAisleField.text = itemAisle
             editAisleLbl.isHidden = false
             editAisleField.isHidden = false
@@ -36,9 +39,9 @@ class EditVC: UIViewController {
     }
     @IBAction func updateBtnPressed(_ sender: Any) {
         
-        let list1Name = UserDefaults.standard
+        //let list1Name = UserDefaults.standard
         
-        if listName == list1Name.string(forKey: "List1Name") {
+        if list == "1" {
             FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(itemPostID).child("Item").setValue(editTextField.text)
         
         FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(itemPostID).child("Aisle").setValue(editAisleField.text)
@@ -54,9 +57,9 @@ class EditVC: UIViewController {
 
     @IBAction func cancelBtnPressed(_ sender: Any) {
         
-        let list1Name = UserDefaults.standard
+        //let list1Name = UserDefaults.standard
         
-        if listName == list1Name.string(forKey: "List1Name") {
+        if list == "1"{
             self.performSegue(withIdentifier: "FinishEdit", sender: UIButton())
         } else {
             self.performSegue(withIdentifier: "FinishEdit2", sender: UIButton())

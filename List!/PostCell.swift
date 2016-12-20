@@ -13,6 +13,7 @@ import Firebase
 class PostCell: UITableViewCell {
     
     @IBOutlet weak var item: UILabel!
+    @IBOutlet weak var aisle: UILabel!
    
     
     var post: Post!
@@ -29,7 +30,9 @@ class PostCell: UITableViewCell {
         
         if let listNo = listCheck.string(forKey: "List") {
             list = listNo
+            print(" .....list: \(list)")
         }
+        
         
         if list1Name.string(forKey: "ListName\(list)") != nil {
             listName = list1Name.string(forKey: "ListName\(list)")!
@@ -43,9 +46,23 @@ class PostCell: UITableViewCell {
 //    }
     
     func configureCell(post: Post) {
+        
+        let listCheck = UserDefaults.standard
+        if let listNo = listCheck.string(forKey: "List") {
+            list = listNo
+        }
+        
+        if list == "1" {
+            self.post = post
+            self.item.text = post.item
+            //self.aisle.text = "hello"
+            self.aisle.text = post.aisle
+            
+        } else {
+           // aisle.isHidden = true
         self.post = post
              self.item.text = post.item
-       
+        }
 
     }
 
