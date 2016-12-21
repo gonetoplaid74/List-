@@ -45,7 +45,7 @@ class PostCell: UITableViewCell {
     
 //    }
     
-    func configureCell(post: Post) {
+    func configureCell(_ post: Post) {
         
         let listCheck = UserDefaults.standard
         if let listNo = listCheck.string(forKey: "List") {

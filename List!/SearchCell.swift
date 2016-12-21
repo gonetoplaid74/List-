@@ -32,7 +32,7 @@ class SearchCell: UITableViewCell {
     
     //    }
     
-    func configureCell(post: Post) {
+    func configureCell(_ post: Post) {
         self.post = post
         self.searchItem.text = post.item
         

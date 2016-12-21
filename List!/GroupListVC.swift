@@ -23,6 +23,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @IBOutlet weak var addItemLbl: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var sortingBar: UISegmentedControl!
     var listName = String()
     var list = String()
     
@@ -53,10 +54,11 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableView.dataSource = self
         
         
-        if list == "1"{
-            searchBtn.isHidden = false
-            
-        }
+        
+//        if list == "1"{
+//            searchBtn.isHidden = false
+//            
+//        }
         
         
         FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").queryOrdered(byChild: "Catagory").queryEqual(toValue: "\(list)").observe(.value, with: {snapshot in
@@ -77,9 +79,10 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 }
             }
             
+     
             
-      
-            self.tableView.reloadData()        })
+            self.tableView.reloadData()
+        })
         
         tableView.allowsSelectionDuringEditing = true
         
@@ -140,6 +143,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
                 itemTextLbl = item.item
                 itemPostID = item.postID
                 itemAisle = item.aisle
+                
             self.performSegue(withIdentifier: "Edit", sender: UITableViewRowAction())
         
             } else {
@@ -160,23 +164,25 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
             let item = self.posts[indexPath.row]
             self.posts.remove(at: indexPath.row)
             
-          if self.list == "1" {
+      //    if self.list == "1" {
                 
-                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").removeValue(completionBlock: { (error, ref) in
-                    
-                
-                
-            })
-            } else {
-                
-                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue(completionBlock: { (error, ref) in
-                    return
-                    
-                })
-            }
+                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").setValue("Removed\(self.list)")
+//            (completionBlock: { (error, ref) in
+//                    
+//                
+//                
+//            })
+//            } else {
+//                
+//                FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).removeValue(completionBlock: { (error, ref) in
+//                    return
+//                    
+//                })
+//            }
             
-            self.tableView.reloadData()        }
-        
+           self.tableView.reloadData()
+      //  }
+        }
         
         edit.backgroundColor = UIColor(red: 0.3764, green: 0.4902, blue: 0.5451, alpha: 1.0)
         delete.backgroundColor = UIColor(red: 0.9411, green: 0.3764, blue: 0.5725, alpha: 1.0)
@@ -198,11 +204,34 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = posts[indexPath.row]
+        let post : Post
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
             
-            cell.configureCell(post: post)
+            
+            
+            if list == "1" {
+            
+            switch(self.sortingBar.selectedSegmentIndex) {
+            case 0:
+                self.posts.sort{
+                    $0.item < $1.item
+                }
+            case 1:
+                self.posts.sort{
+                    $0.aisle < $1.aisle
+                }
+            case 2:
+                self.posts.sort {
+                    $0.likes > $1.likes
+                }
+            default: break
+            }
+            
+                
+            }
+            post = posts[indexPath.row]
+            cell.configureCell(post)
             
             return cell
             
@@ -227,22 +256,24 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     func postToFirebase() {
         
-        let post: Dictionary<String, String>
+        let post: Dictionary<String, AnyObject>
         
        
         
         if list == "1"{
             post = [
-            "Item": addItemLbl.text!,
-            "Catagory": list,
-            "Aisle": addCatagoryLBL.text!
+            "Item": addItemLbl.text! as AnyObject,
+            "Catagory": list as AnyObject,
+            "Aisle": addCatagoryLBL.text! as AnyObject,
+             "Likes": 0 as AnyObject
         ]
         
         
         } else {
             post = [
-                "Item": addItemLbl.text!,
-                "Catagory": list
+                "Item": addItemLbl.text! as AnyObject,
+                "Catagory": list as AnyObject,
+                "Likes" : 0 as AnyObject
         ]
             
             
@@ -264,6 +295,10 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
     }
     
+    @IBAction func sortingBarSelected(_ sender: Any) {
+        self.tableView.reloadData()
+        
+    }
     
     
 }

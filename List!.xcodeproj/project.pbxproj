@@ -31,6 +31,7 @@
 		C27983E71DD0F1AF006CBB93 /* PrivateEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27983E61DD0F1AF006CBB93 /* PrivateEditVC.swift */; };
 		C27BBA3D1DFACC5200B4EEA9 /* groupSetupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27BBA3C1DFACC5200B4EEA9 /* groupSetupVC.swift */; };
 		C2A31A921DBA211700DB99B0 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A31A911DBA211700DB99B0 /* PostCell.swift */; };
+		C2C55A3B1E0B002F0040ECD7 /* FrontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C55A3A1E0B002F0040ECD7 /* FrontView.swift */; };
 		C2FA5C331DCB88CE0029596B /* privateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA5C321DCB88CE0029596B /* privateCell.swift */; };
 		C2FF90151DB91D150058E56C /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF90141DB91D150058E56C /* post.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		C27BBA3C1DFACC5200B4EEA9 /* groupSetupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = groupSetupVC.swift; sourceTree = "<group>"; };
 		C2A31A901DBA0AD500DB99B0 /* List!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "List!.entitlements"; sourceTree = "<group>"; };
 		C2A31A911DBA211700DB99B0 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		C2C55A3A1E0B002F0040ECD7 /* FrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontView.swift; sourceTree = "<group>"; };
 		C2FA5C321DCB88CE0029596B /* privateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = privateCell.swift; sourceTree = "<group>"; };
 		C2FF90141DB91D150058E56C /* post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
 		FDB2CFA804C923A2A04EAF50 /* Pods_List_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_List_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +119,7 @@
 				C2FF90141DB91D150058E56C /* post.swift */,
 				1651671E1DB7EC0C00EF1574 /* GoogleService-Info.plist */,
 				1640B07F1DB92CDA009A5977 /* TextField.swift */,
+				C2C55A3A1E0B002F0040ECD7 /* FrontView.swift */,
 				1640B0811DB92D82009A5977 /* MaterialButton.swift */,
 				1640B0841DB93085009A5977 /* MaterialView.swift */,
 				1640B0861DB933A1009A5977 /* BottomView.swift */,
@@ -300,6 +303,7 @@
 				167068B21DB7EA0E00F6AB06 /* PrivateListVC.swift in Sources */,
 				C221BFC01DC0E3D3006B4AF8 /* SearchCell.swift in Sources */,
 				C2FA5C331DCB88CE0029596B /* privateCell.swift in Sources */,
+				C2C55A3B1E0B002F0040ECD7 /* FrontView.swift in Sources */,
 				1670689B1DB7E8B700F6AB06 /* LoginVC.swift in Sources */,
 				167068991DB7E8B700F6AB06 /* AppDelegate.swift in Sources */,
 				1640B0851DB93085009A5977 /* MaterialView.swift in Sources */,
