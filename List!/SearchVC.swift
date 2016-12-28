@@ -39,6 +39,13 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 list = listcheck
             }
             
+            if list == "1" {
+                sortingBar.isHidden = false
+            } else {
+                sortingBar.isHidden = true
+            }
+
+            
             print("List\(list)")
             let title = UserDefaults.standard
             if title.string(forKey: "ListName\(list)") != nil {
@@ -181,6 +188,8 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             
             let post : Post
             
+            if list == "1" {
+            
             switch(self.sortingBar.selectedSegmentIndex) {
             case 0:
                 self.posts.sort{
@@ -196,7 +205,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 }
             default: break
             }
-            
+            }
            
             
             if searchController.isActive && searchController.searchBar.text != "" {

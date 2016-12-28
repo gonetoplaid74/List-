@@ -40,6 +40,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         if let listcheck = listNo.string(forKey: "List"){
             list = listcheck
         }
+       
         
         
         
