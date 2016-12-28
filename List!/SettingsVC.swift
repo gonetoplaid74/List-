@@ -51,14 +51,13 @@ class SettingsVC: UIViewController {
         list5Name.text = storedList5Name.string(forKey: "ListName5")
         list6Name.text = storedList6Name.string(forKey: "ListName6")
         
-        print("list1Name ..... \(list1Name.text)")
         
         
         FIRDatabase.database().reference().child(groupName.text!).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             let pscode = value?["Passcode"] as? String
-            print("pscode ........ \(pscode)")
+           
             
            // let user = User.init(username: username)
             self.passcode.text = pscode
@@ -131,7 +130,7 @@ class SettingsVC: UIViewController {
             self.list3Check.append(l6n)
         }
        
-        print ("... \(list5Check),\(list6Check)")
+        
         
         if list1Check.contains(list1Name.text!) || list2Check.contains(list2Name.text!) || list3Check.contains(list3Name.text!) || list4Check.contains(list4Name.text!) || list5Check.contains(list5Name.text!) || list6Check.contains(list6Name.text!) {
             infoLbl.isHidden = false

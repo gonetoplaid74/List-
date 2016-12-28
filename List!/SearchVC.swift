@@ -46,7 +46,7 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             }
 
             
-            print("List\(list)")
+            
             let title = UserDefaults.standard
             if title.string(forKey: "ListName\(list)") != nil {
                 searchTitleLbl.text = title.string(forKey: "ListName\(list)")
@@ -118,13 +118,11 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 
                 
                self.likesCount = likes.likes
-                print (".... likes \(self.likesCount)")
-                    
+                
                     self.likesCount += 1
                     
                 
-                
-                print("... revised likes \(self.likesCount)")
+               
                 
             
             FIRDatabase.database().reference().child(groupName.string(forKey: "GroupName")!).child("Lists").child(item.postID).child("Catagory").setValue(self.list)

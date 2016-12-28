@@ -30,7 +30,7 @@ class PostCell: UITableViewCell {
         
         if let listNo = listCheck.string(forKey: "List") {
             list = listNo
-            print(" .....list: \(list)")
+            
         }
         
         
