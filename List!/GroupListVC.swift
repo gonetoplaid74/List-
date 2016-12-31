@@ -34,6 +34,8 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         let listNo = UserDefaults.standard
         
@@ -252,6 +254,7 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         postToFirebase()
         addItemLbl.resignFirstResponder()
+        addCatagoryLBL.resignFirstResponder()
         
     }
     
@@ -300,6 +303,21 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         self.tableView.reloadData()
         
     }
+    func keyboardWillShow(notification: NSNotification) {
+        
+        
+        if self.view.frame.origin.y == 0{
+            self.view.frame.origin.y -= 10
+        }
+        
+    }
     
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0{
+            self.view.frame.origin.y += 10
+        }
+    }
+
     
 }
