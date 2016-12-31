@@ -230,19 +230,18 @@ class LoginVC: UIViewController {
             loginInfo.isHidden = false
             loginInfo.text = "Please enter an e-mail address"
             return
-
-            
-            
         }
         
+        
+        
         FIRAuth.auth()?.sendPasswordReset(withEmail: usernameField.text!) { (error) in
-            
             if let emailadd = self.usernameField.text {
+                self.loginInfo.isHidden = false
+                self.loginInfo.text = ("Password Reset email sent to \(emailadd)")
                 
-            self.loginInfo.text = ("Password Reset email sent to \(emailadd)")
-            
-        }
-        }
+            }
+
+                    }
         
     }
     
