@@ -12,65 +12,58 @@ import Firebase
 
 class PostCell: UITableViewCell {
     
-    @IBOutlet weak var item: UITextView!
-    @IBOutlet weak var catagory: UITextView!
-    @IBOutlet weak var likesLbl: UILabel!
-    @IBOutlet weak var likesImg: UIImageView!
+    @IBOutlet weak var item: UILabel!
+    @IBOutlet weak var aisle: UILabel!
+   
     
     var post: Post!
     var likesRef: FIRDatabaseReference!
     var list = String()
+    var listName = String()
 
 
     func viewDidLoad() {
         viewDidLoad()
         
-        let listName = UserDefaults.standard
+        let listCheck = UserDefaults.standard
+        let list1Name = UserDefaults.standard
         
-        if listName.string(forKey: "List") != nil {
-            list = listName.string(forKey: "List")!
+        if let listNo = listCheck.string(forKey: "List") {
+            list = listNo
+            
+        }
+        
+        
+        if list1Name.string(forKey: "ListName\(list)") != nil {
+            listName = list1Name.string(forKey: "ListName\(list)")!
         } else {
-            list = "Grocery"
+            listName = list1Name.string(forKey: "ListName1")!
         }
     
 
     }
     
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(likeBtnPressed))
-//        tap.numberOfTapsRequired = 1
-//        likesImg.addGestureRecognizer(tap)
-//        likesImg.isUserInteractionEnabled = true
-//        
 //    }
     
-    func configureCell(post: Post) {
+    func configureCell(_ post: Post) {
+        
+        let listCheck = UserDefaults.standard
+        if let listNo = listCheck.string(forKey: "List") {
+            list = listNo
+        }
+        
+        if list == "1" {
+            self.post = post
+            self.item.text = post.item
+            //self.aisle.text = "hello"
+            self.aisle.text = post.aisle
+            
+        } else {
+           // aisle.isHidden = true
         self.post = post
-      //  likesRef = DataService.ds.REF_USER_CURRENT.child("Likes").child(post.postID)
-        self.catagory.text = post.aisle
-        self.item.text = post.item
-       // self.likesLbl.text = "\(post.likes)"
-
+             self.item.text = post.item
+        }
 
     }
-//    func likeBtnPressed(sender: UITapGestureRecognizer) {
-//        likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let _ = snapshot.value as? NSNull {
-//                self.likesImg.image = UIImage(named: "filled-heart")
-//                self.post.adjustLikes(addLikes: true)
-//                self.likesRef.setValue(true)
-//            } else {
-//                self.likesImg.image = UIImage(named: "empty-heart")
-//                self.post.adjustLikes(addLikes: false)
-//                self.likesRef.removeValue()
-//                
-//            }
-//            
-//        })
-//        
-//        
-//    }
 
 }

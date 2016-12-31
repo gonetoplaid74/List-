@@ -11,17 +11,24 @@ import Firebase
 import SwiftKeychainWrapper
 
 let DB_BASE = FIRDatabase.database().reference()
+let groupName = UserDefaults.standard
+
+
 
 class DataService {
     
     static let ds = DataService()
+    
+    
+
     // DB Reference
     
+    
     private var _REF_BASE = DB_BASE
-    private var _REF_POSTS = DB_BASE.child("Lists")
-    private var _REF_USERS = DB_BASE.child("Users")
+    private var _REF_POSTS = DB_BASE.child(groupName.string(forKey: "GroupName")!).child("Lists")
+    private var _REF_USERS = DB_BASE.child(groupName.string(forKey: "GroupName")!).child("Users")
 
-
+    
     var REF_BASE : FIRDatabaseReference {
         return _REF_BASE
     }
@@ -33,7 +40,7 @@ class DataService {
     
     var REF_USERS: FIRDatabaseReference {
         return _REF_USERS
-}
+    }
     var REF_USER_CURRENT: FIRDatabaseReference {
         let uid = KeychainWrapper.standard.string(forKey: KEY_UID)
         let user = REF_USERS.child(uid!)
@@ -47,7 +54,7 @@ class DataService {
     }
     
     func getPosts(catagory: String, item: String, likes: Int, listName: String){
-        REF_POSTS
+      //  REF_POSTS
     }
     
 }
