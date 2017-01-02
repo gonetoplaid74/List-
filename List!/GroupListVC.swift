@@ -254,8 +254,9 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         }
         postToFirebase()
         addItemLbl.resignFirstResponder()
+        if list == "1" {
         addCatagoryLBL.resignFirstResponder()
-        
+        }
     }
     
     func postToFirebase() {

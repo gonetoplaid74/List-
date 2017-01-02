@@ -26,6 +26,9 @@ class groupSetupVC: UIViewController {
     
     override func viewDidLoad() {
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         let user = UserDefaults.standard
        emailString = user.string(forKey: "UserName")!
         
@@ -201,5 +204,22 @@ func completeSignup(id: String, userData: Dictionary<String, String>) {
     performSegue(withIdentifier: "login2", sender: nil)
     
 }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        
+        if self.view.frame.origin.y == 0{
+            self.view.frame.origin.y -= 150
+        }
+        
+    }
+    
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0{
+            self.view.frame.origin.y += 150
+        }
+    }
+
 
 }
