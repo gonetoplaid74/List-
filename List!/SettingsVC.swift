@@ -31,6 +31,9 @@ class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let device = UIDevice()
+        
+        if device.model != "iPad" {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
@@ -39,6 +42,7 @@ class SettingsVC: UIViewController {
         
         
         view.addGestureRecognizer(tap)
+        }
         
         let storedGroupName = UserDefaults.standard
         let storedList1Name = UserDefaults.standard

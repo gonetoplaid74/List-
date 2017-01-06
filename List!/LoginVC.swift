@@ -23,6 +23,10 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         
         loginInfo.isHidden = true
+        
+        let device = UIDevice()
+        
+        if device.model != "iPad" {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
@@ -32,6 +36,7 @@ class LoginVC: UIViewController {
        
         
         view.addGestureRecognizer(tap)
+        }
         
         let groupName = UserDefaults.standard
         if groupName.string(forKey: "GroupName") != "" {

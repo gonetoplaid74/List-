@@ -34,8 +34,13 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        
+        let device = UIDevice()
+        
+        if device.model != "iPad" {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        }
         
         let listNo = UserDefaults.standard
         
@@ -55,13 +60,16 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+                
+        if device.model != "iPad" {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         
         
         
         view.addGestureRecognizer(tap)
         
-        
+        }
         
 //        if list == "1"{
 //            searchBtn.isHidden = false

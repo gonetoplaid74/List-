@@ -26,6 +26,9 @@ class groupSetupVC: UIViewController {
     
     override func viewDidLoad() {
         
+        let device = UIDevice()
+        
+        if device.model != "iPad" {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
@@ -35,7 +38,7 @@ class groupSetupVC: UIViewController {
         
         view.addGestureRecognizer(tap)
 
-        
+        }
         let user = UserDefaults.standard
        emailString = user.string(forKey: "UserName")!
         
