@@ -18,6 +18,12 @@ class PrivateEditVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        
+        
+        view.addGestureRecognizer(tap)
+        
         privateEditTextField.text = privateitemTextLbl
         
         let userID = UserDefaults.standard
@@ -28,6 +34,11 @@ class PrivateEditVC: UIViewController {
         }
         
     }
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+
     @IBAction func updateBtnPressed(_ sender: Any) {
         
         

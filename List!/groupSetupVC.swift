@@ -29,6 +29,13 @@ class groupSetupVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginVC.dismissKeyboard))
+        
+        
+        
+        view.addGestureRecognizer(tap)
+
+        
         let user = UserDefaults.standard
        emailString = user.string(forKey: "UserName")!
         
@@ -64,6 +71,10 @@ class groupSetupVC: UIViewController {
         
         super.viewDidLoad()
 
+    }
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 
 

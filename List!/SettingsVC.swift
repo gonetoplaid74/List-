@@ -34,6 +34,12 @@ class SettingsVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        
+        
+        view.addGestureRecognizer(tap)
+        
         let storedGroupName = UserDefaults.standard
         let storedList1Name = UserDefaults.standard
         let storedList2Name = UserDefaults.standard
@@ -69,6 +75,10 @@ class SettingsVC: UIViewController {
         }
         
        
+    }
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
 
  
@@ -171,7 +181,7 @@ class SettingsVC: UIViewController {
         
         
         if self.view.frame.origin.y == 0{
-            self.view.frame.origin.y -= 125
+            self.view.frame.origin.y -= 225
         }
         
     }
@@ -179,7 +189,7 @@ class SettingsVC: UIViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0{
-            self.view.frame.origin.y += 125
+            self.view.frame.origin.y += 225
         }
     }
 

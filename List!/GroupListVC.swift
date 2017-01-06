@@ -55,6 +55,11 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        
+        
+        view.addGestureRecognizer(tap)
         
         
         
@@ -90,6 +95,11 @@ class GroupListVC: UIViewController, UITableViewDelegate, UITableViewDataSource,
         tableView.allowsSelectionDuringEditing = true
         
     }
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+
     
     func appMovedToBackground() {
         

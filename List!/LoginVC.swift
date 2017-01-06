@@ -26,6 +26,13 @@ class LoginVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+       
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginVC.dismissKeyboard))
+        
+       
+        
+        view.addGestureRecognizer(tap)
+        
         let groupName = UserDefaults.standard
         if groupName.string(forKey: "GroupName") != "" {
             groupField.text = groupName.string(forKey: "GroupName")
@@ -40,7 +47,9 @@ class LoginVC: UIViewController {
             usernameField.text = ""
         }
         
-        
+        usernameField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        groupField.resignFirstResponder()
         FIRDatabase.database().reference().observe(.value, with: {snapshot in
             
             
@@ -68,6 +77,12 @@ class LoginVC: UIViewController {
 
        
            }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         if let _ = KeychainWrapper.standard.string(forKey: KEY_UID){
@@ -125,7 +140,7 @@ class LoginVC: UIViewController {
             
         
         
-
+        usernameField.resignFirstResponder()
         passwordField.resignFirstResponder()
         groupField.resignFirstResponder()
 

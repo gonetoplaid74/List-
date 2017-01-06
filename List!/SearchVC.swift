@@ -30,7 +30,12 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         
         override func viewDidLoad() {
             
-    
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginVC.dismissKeyboard))
+            
+            
+            
+            view.addGestureRecognizer(tap)
+
             
             let listNo = UserDefaults.standard
             
@@ -90,11 +95,18 @@ class SearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             
             searchTableView.allowsSelectionDuringEditing = true
         }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+
         
         func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
             return true
         }
-        
+    
+    
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let add = UITableViewRowAction(style: .normal, title: "Add") { action, index in
